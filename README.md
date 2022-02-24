@@ -4,4 +4,4 @@
 
 ### Link to the side
 
-    https://ilyesedina.github.io/Sudoku-app/
+https://ilyesedina.github.io/Sudoku-app/

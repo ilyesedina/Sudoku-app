@@ -5,3 +5,25 @@ document.querySelector('#dark-mode-toggle').addEventListener('click', () => {
     // chang mobile status bar color
     document.querySelector('meta[name="theme-color"').setAttribute('content', isDarkMode ? '#1a1a2e' : '#fff');
 });
+
+const init = () => {
+    const darkmode = JSON.parse(localStorage.getItem('darkmode'));
+    document.body.classList.add(darkmode ? 'dark' : 'light');
+    document.querySelector('meta[name="theme-color"').setAttribute('content', darkmode ? '#1a1a2e' : '#fff');
+
+    const game = getGameInfo();
+
+    document.querySelector('#btn-continue').style.display = game ? 'grid' : 'none';
+
+    initGameGrid();
+    initCellsEvent();
+    initNumberInputEvent();
+
+    if (getPlayerName()) {
+        name_input.value = getPlayerName();
+    } else {
+        name_input.focus();
+    }
+}
+
+init();
