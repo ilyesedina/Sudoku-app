@@ -40,6 +40,45 @@ let selected_cell = -1;
 
 const getGameInfo = () => JSON.parse(localStorage.getItem('game'));
 
+// add space for each 9 cells
+const initGameGrid = () => {
+    let index = 0;
+
+    for (let i = 0; i < Math.pow(CONSTANT.GRID_SIZE,2); i++) {
+        let row = Math.floor(i/CONSTANT.GRID_SIZE);
+        let col = i % CONSTANT.GRID_SIZE;
+        if (row === 2 || row === 5) cells[index].style.marginBottom = '10px';
+        if (col === 2 || col === 5) cells[index].style.marginRight = '10px';
+
+        index++;
+    }
+}
+// ----------------
+
+const setPlayerName = (name) => localStorage.setItem('player_name', name);
+const getPlayerName = () => localStorage.getItem('player_name');
+
+const showTime = (seconds) => new Date(seconds * 1000).toISOString().substr(11, 8);
+
+const startGame = () => {
+    start_screen.classList.remove('active');
+    game_screen.classList.add('active');
+
+    player_name.innerHTML = name_input.value.trim();
+    setPlayerName(name_input.value.trim());
+
+    game_level.innerHTML = CONSTANT.LEVEL_NAME[level_index];
+
+    showTime(seconds);
+
+    timer = setInterval(() => {
+        if (!pause) {
+            seconds = seconds + 1;
+            game_time.innerHTML = showTime(seconds);
+        }
+    }, 1000);
+}
+
 // add button event
 document.querySelector('#btn-level').addEventListener('click', (e) => {
     level_index = level_index + 1 > CONSTANT.LEVEL.length - 1 ? 0 : level_index + 1;
@@ -60,6 +99,8 @@ document.querySelector('#btn-play').addEventListener('click', () => {
     }
 });
 // -------------
+
+
 
 const init = () => {
     const darkmode = JSON.parse(localStorage.getItem('darkmode'));
